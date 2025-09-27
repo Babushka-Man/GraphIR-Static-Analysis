@@ -47,6 +47,7 @@ enum irType {
     Tuple,
     Undefined,
     Union,
+    UnsignedInt,
     UserDefined,
     Void
 };
@@ -155,6 +156,8 @@ int type_compare(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain a
         case String:
         case Void:
         case Any:
+        case UnsignedInt:
+        case Integer:
             return 0;
         case Tuple:
             return type_list_compare(symbolTable, recordTable, type1[1], type2[1]);
@@ -310,6 +313,14 @@ bool irTypeLatticeLte(SymbolTable* symbolTable, RecordTable* recordTable, RamDom
         return true;
     }
 
+    if (type1[0] == UnsignedInt && type2[0] == Integer) {
+        return true;
+    }
+
+    if (type1[0] == UnsignedInt && type2[0] == Number) {
+        return true;
+    }
+
     return type1[0] == type2[0];
 }
 
@@ -441,6 +452,12 @@ RamDomain irTypeLub(SymbolTable* symbolTable, RecordTable* recordTable, RamDomai
     if (t1[0] == Number && t2[0] == Integer) {
         return type1;
     }
+    if (t1[0] == UnsignedInt && (t2[0] == Integer || t2[0] == Number)) {
+        return type2;
+    }
+    if (t2[0] == UnsignedInt && (t1[0] == Integer || t1[0] == Number)) {
+        return type1;
+    }
 
     if (t1[0] == Function && t2[0] == Function) {
         const RamDomain* sig1 = recordTable->unpack(t1[1], 2);
@@ -559,6 +576,12 @@ RamDomain irTypeGlb(SymbolTable* symbolTable, RecordTable* recordTable, RamDomai
     if (type1[0] == Number && type2[0] == Integer) {
         return arg2;
     }
+    if (type1[0] == UnsignedInt && (type2[0] == Integer || type2[0] == Number)) {
+        return arg1;
+    }
+    if (type2[0] == UnsignedInt && (type1[0] == Integer || type1[0] == Number)) {
+        return arg2;
+    }
 
     if (type_compare(symbolTable, recordTable, arg1, arg2) == 0) {
         return arg1;
@@ -599,6 +622,7 @@ RamDomain irTypeToString(SymbolTable* symbolTable, RecordTable* recordTable, Ram
         "Tuple",
         "Undefined",
         "Union",
+        "UnsignedInt",
         "UserDefined",
         "Void"
     };
@@ -638,7 +662,7 @@ RamDomain irTypeToString(SymbolTable* symbolTable, RecordTable* recordTable, Ram
     return symbolTable->encode(typeNames[t[0]]);
 }
 
-RamDomain getElementType(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain type) {
+RamDomain getElementType(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain type) { 
     const RamDomain* t = recordTable->unpack(type, maxArity);
     RamDomain ret[2] = {Bottom, nil};
 
@@ -655,6 +679,7 @@ RamDomain getElementType(SymbolTable* symbolTable, RecordTable* recordTable, Ram
         case String:
         case Tuple:
         case Undefined:
+        case UnsignedInt:
         case UserDefined:
         case Void:
             ret[0] = Bottom;

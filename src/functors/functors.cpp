@@ -26,4 +26,15 @@ int32_t is_integer(const char* str) {
 
 }
 
+int32_t is_unsigned_int(const char* str) {
+    try {
+        unsigned long int n = std::stoul(str);
+        double d = std::stod(str);
+        return n == d;
+    }
+    catch (...) {
+        return 0;
+    }
+}
+
 }
