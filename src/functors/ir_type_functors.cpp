@@ -103,7 +103,7 @@ int type_compare(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain a
         case String:
         case Void:
         case Any:
-        case UnsignedInt:
+        case UnsignedInteger:
         case Integer:
             return 0;
         case Tuple:
@@ -260,11 +260,11 @@ bool irTypeLatticeLte(SymbolTable* symbolTable, RecordTable* recordTable, RamDom
         return true;
     }
 
-    if (type1[0] == UnsignedInt && type2[0] == Integer) {
+    if (type1[0] == UnsignedInteger && type2[0] == Integer) {
         return true;
     }
 
-    if (type1[0] == UnsignedInt && type2[0] == Number) {
+    if (type1[0] == UnsignedInteger && type2[0] == Number) {
         return true;
     }
 
@@ -399,10 +399,10 @@ RamDomain irTypeLub(SymbolTable* symbolTable, RecordTable* recordTable, RamDomai
     if (t1[0] == Number && t2[0] == Integer) {
         return type1;
     }
-    if (t1[0] == UnsignedInt && (t2[0] == Integer || t2[0] == Number)) {
+    if (t1[0] == UnsignedInteger && (t2[0] == Integer || t2[0] == Number)) {
         return type2;
     }
-    if (t2[0] == UnsignedInt && (t1[0] == Integer || t1[0] == Number)) {
+    if (t2[0] == UnsignedInteger && (t1[0] == Integer || t1[0] == Number)) {
         return type1;
     }
 
@@ -523,10 +523,10 @@ RamDomain irTypeGlb(SymbolTable* symbolTable, RecordTable* recordTable, RamDomai
     if (type1[0] == Number && type2[0] == Integer) {
         return arg2;
     }
-    if (type1[0] == UnsignedInt && (type2[0] == Integer || type2[0] == Number)) {
+    if (type1[0] == UnsignedInteger && (type2[0] == Integer || type2[0] == Number)) {
         return arg1;
     }
-    if (type2[0] == UnsignedInt && (type1[0] == Integer || type1[0] == Number)) {
+    if (type2[0] == UnsignedInteger && (type1[0] == Integer || type1[0] == Number)) {
         return arg2;
     }
 
@@ -569,7 +569,7 @@ RamDomain irTypeToString(SymbolTable* symbolTable, RecordTable* recordTable, Ram
         "Tuple",
         "Undefined",
         "Union",
-        "UnsignedInt",
+        "UnsignedInteger",
         "UserDefined",
         "Void"
     };
@@ -626,7 +626,7 @@ RamDomain getElementType(SymbolTable* symbolTable, RecordTable* recordTable, Ram
         case String:
         case Tuple:
         case Undefined:
-        case UnsignedInt:
+        case UnsignedInteger:
         case UserDefined:
         case Void:
             ret[0] = Bottom;

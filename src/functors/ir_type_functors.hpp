@@ -34,7 +34,7 @@ enum irType {
     Tuple,
     Undefined,
     Union,
-    UnsignedInt,
+    UnsignedInteger,
     UserDefined,
     Void
 };

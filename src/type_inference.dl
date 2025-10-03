@@ -52,17 +52,17 @@ boolean_operator("||").
 boolean_operator("!").
 
 .decl numeric_type(type: irType<>)
-numeric_type($UnsignedInt()).
+numeric_type($UnsignedInteger()).
 numeric_type($Integer()).
 numeric_type($Number()).
 
 .decl inferred_type(id: number, type: irType<>)
-inferred_type(id, $UnsignedInt()) :-
-    vertex(id, "Literal", _, value), IS_UNSIGNED_INT(value).
+inferred_type(id, $UnsignedInteger()) :-
+    vertex(id, "Literal", _, value), IS_UNSIGNED_INTEGER(value).
 inferred_type(id, $Integer()) :-
-    vertex(id, "Literal", _, value), IS_INTEGER(value), !IS_UNSIGNED_INT(value).
+    vertex(id, "Literal", _, value), IS_INTEGER(value), !IS_UNSIGNED_INTEGER(value).
 inferred_type(id, $Number()) :-
-    vertex(id, "Literal", _, value), IS_NUMERIC(value), !IS_INTEGER(value), !IS_UNSIGNED_INT(value).
+    vertex(id, "Literal", _, value), IS_NUMERIC(value), !IS_INTEGER(value), !IS_UNSIGNED_INTEGER(value).
 inferred_type(id, $String()) :-
     vertex(id, "Literal", _, value), IS_STRING(value).
 inferred_type(id, $Boolean()) :-

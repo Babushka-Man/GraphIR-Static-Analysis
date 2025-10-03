@@ -25,7 +25,7 @@ int stof(const char * str)
 }
 
 RamDomain negateType(RamDomain type) {
-    if(type == UnsignedInt)
+    if(type == UnsignedInteger)
     {
         return Integer;
     }
@@ -34,7 +34,7 @@ RamDomain negateType(RamDomain type) {
 
 bool isNumerical(RamDomain type) {
         // return type == Undefined || type == UnsignedInteger || type == Integer || type == Number || type == Bottom;
-        return type == UnsignedInt || type == Integer || type == Number || type == Bottom;
+        return type == UnsignedInteger || type == Integer || type == Number || type == Bottom;
 }
 
 RamDomain unaryOpOnTypeAux(SymbolTable* st, RecordTable* recordTable, RamDomain fullType, RamDomain op)
@@ -115,8 +115,8 @@ RamDomain binaryOpOnTypesAux(SymbolTable* symbolTable, RecordTable* recordTable,
     
     if(opStr == "+" || opStr == "*")
     {
-        if(type1 == UnsignedInt && type2 == UnsignedInt) {
-            return UnsignedInt;
+        if(type1 == UnsignedInteger && type2 == UnsignedInteger) {
+            return UnsignedInteger;
         }
         if(type1 == Number || type2 == Number) {
             return Number;
@@ -126,8 +126,8 @@ RamDomain binaryOpOnTypesAux(SymbolTable* symbolTable, RecordTable* recordTable,
     
     if(opStr == "%")
     {
-        if(type1 == UnsignedInt && type2 != Number) {
-            return UnsignedInt;
+        if(type1 == UnsignedInteger && type2 != Number) {
+            return UnsignedInteger;
         }
         if(type1 == Number || type2 == Number) {
             return Number;
@@ -165,7 +165,7 @@ RamDomain binaryOpOnTypesAux(SymbolTable* symbolTable, RecordTable* recordTable,
 
     if(opStr == "**")
     {
-        if(type2 == UnsignedInt) 
+        if(type2 == UnsignedInteger) 
         {
             return type1;
         }
@@ -183,16 +183,16 @@ RamDomain binaryOpOnTypesAux(SymbolTable* symbolTable, RecordTable* recordTable,
     
     if(opStr == "|")
     {
-        if(type1 == UnsignedInt && type2 == UnsignedInt) {
-            return UnsignedInt;
+        if(type1 == UnsignedInteger && type2 == UnsignedInteger) {
+            return UnsignedInteger;
         }
         return Integer;
     }
     
     if(opStr == "&")
     {
-        if(type1 == UnsignedInt || type2 == UnsignedInt) {
-            return UnsignedInt;
+        if(type1 == UnsignedInteger || type2 == UnsignedInteger) {
+            return UnsignedInteger;
         }
         return Integer;
     }
