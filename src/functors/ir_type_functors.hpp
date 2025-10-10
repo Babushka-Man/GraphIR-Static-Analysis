@@ -9,6 +9,11 @@ using souffle::RecordTable;
 
 using std::string;
 
+typedef RamDomain AdtTag;
+typedef RamDomain AdtId;
+typedef RamDomain AdtListId;
+typedef RamDomain AdtSetId;
+
 extern "C" {
     RamDomain irTypeLub(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain arg1, RamDomain arg2);
     RamDomain irTypeGlb(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain arg1, RamDomain arg2);
