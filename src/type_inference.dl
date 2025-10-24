@@ -5,6 +5,7 @@
 #include "points_to.dl"
 #include "utilities.dl"
 #include "ir_type.dl"
+#include "evenness.dl"
 
 .functor unaryOpOnType(type: irType, op: symbol): irType stateful
 .functor binaryOpOnTypes(type1: irType, type2: irType, op: symbol): irType stateful
