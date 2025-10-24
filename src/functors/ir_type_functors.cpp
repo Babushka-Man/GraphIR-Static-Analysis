@@ -1,63 +1,10 @@
-
-#include <exception>
-#include <cassert>
-
-#include <souffle/SouffleInterface.h>
-
-using souffle::RamDomain;
-using souffle::SymbolTable;
-using souffle::RecordTable;
-
-using std::string;
-
-extern "C" {
-    RamDomain irTypeLub(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain arg1, RamDomain arg2);
-    RamDomain irTypeGlb(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain arg1, RamDomain arg2);
-    RamDomain irTypeToString(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain type);
-    RamDomain getElementType(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain type);
-    RamDomain getFunctionRetType(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain type);
-    RamDomain getFunctionParamType(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain type, RamDomain index);
-    RamDomain functionRetTemplate(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain type);
-    RamDomain functionParamTemplate(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain type, RamDomain index);
-}
-
-// enum irType {
-//     Bottom = 0,
-//     Undefined,
-//     Number,
-//     Boolean,
-//     String,
-//     Symbol,
-//     Union,
-//     Array,
-//     Any
-// };
-
-enum irType {
-    Any = 0,
-    Array,
-    Boolean,
-    Bottom,
-    Function,
-    Integer,
-    Null,
-    Number,
-    Object,
-    String,
-    Tuple,
-    Undefined,
-    Union,
-    UnsignedInt,
-    UserDefined,
-    Void
-};
+#include "ir_type_functors.hpp"
 
 const RamDomain nil = 0;
 
-const size_t maxArity = 2;
-
 int type_compare(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain arg1, RamDomain arg2);
 int tag_compare(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain arg1, RamDomain arg2);
+
 
 RamDomain type_set_intersect(SymbolTable* symbolTable, RecordTable* recordTable, RamDomain setId1, RamDomain setId2) {
     if (setId1 == nil || setId2 == nil) {
