@@ -1,0 +1,48 @@
+#pragma once
+
+#include "graph_definitions.dl"
+#include "points_to.dl"
+#include "utilities.dl"
+#include "ir_type.dl"
+#include "points_to.dl"
+
+.decl sourceToSink(source: symbol, sourceId: number, sinkFunction: symbol, sinkIdx: symbol, sinkId: number)
+.decl source(sourceFunction: symbol, retValueId: number)
+.decl infectedBySource(sourceFunction: symbol, valueId: number)
+.decl sink(sinkFunction: symbol, paramIdx: symbol, paramId: number)
+
+source("getUserInput", retId) :-
+    function_return("getUserInput", ret),
+    edge(ret, retId, _, "value").
+
+sink("sendToSink", idx, id) :-
+    vertex(functionId, _, _, "sendToSink"),
+    edge(_, functionId, _, "callee"),
+    edge(functionId, id, _, idx),
+    IS_INTEGER(idx).
+
+infectedBySource(sourceFunction, id) :-
+    source(sourceFunction, id).
+
+infectedBySource(sourceFunction, id) :-
+    may_refer_to(id, infectedId),
+    infectedBySource(sourceFunction, infectedId).
+
+infectedBySource(sourceFunction, id) :-
+    vertex(id, kind, _, _), 
+    match(".*Operation", kind),
+    edge(id, arg, _, _),
+    infectedBySource(sourceFunction, arg).
+
+sourceToSink(sourceName, sourceId, sinkFunction, sinkIdx, sinkId) :- 
+    source(sourceName, sourceId),
+    sink(sinkFunction, sinkIdx, sinkId),
+    may_refer_to(sinkId, sourceId).
+
+sourceToSink(sourceName, sourceId, sinkFunction, sinkIdx, sinkId) :- 
+    infectedBySource(sourceName, infectedId),
+    source(sourceName, sourceId),
+    sink(sinkFunction, sinkIdx, sinkId),
+    may_refer_to(sinkId, infectedId).
+
+.output sourceToSink
