@@ -6,3 +6,13 @@ libfunctors.dylib
 
 # Output files
 out
+
+/.vscode
+*.out
+/*.txt
+
+*.csv
+!edges.csv
+!vertices.csv
+
+samples/**/*.cpp
