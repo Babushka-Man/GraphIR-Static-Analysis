@@ -40,6 +40,18 @@ infectedBySource(sourceFunction, id) :-
     edge(id, arg, _, _),
     infectedBySource(sourceFunction, arg).
 
+infectedBySource(sourceFunction, objectId) :-
+    vertex(objectId, "Allocation", _, _),
+    edge(storeId, objectId, _, "object"),
+    edge(storeId, valueId, _, "value"),
+    infectedBySource(sourceFunction, valueId).
+
+infectedBySource(sourceFunction, id) :-
+    vertex(loadId, "Load", _, _),
+    edge(loadId, objectId, _, "object"),
+    ((id = loadId, infectedBySource(sourceFunction, objectId));
+        (id = objectId, infectedBySource(sourceFunction, loadId))).
+
 sourceToSink(sourceName, sourceId, sinkFunction, sinkIdx, sinkId) :- 
     source(sourceName, sourceId),
     sink(sinkFunction, sinkIdx, sinkId),
