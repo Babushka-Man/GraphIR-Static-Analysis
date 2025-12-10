@@ -59,6 +59,13 @@ infectedBySource(sourceFunction, arrayId) :-
     edge(arrayId, valueId, "Data", _),
     infectedBySource(sourceFunction, valueId).
 
+infectedBySource(sourceFunction, objectId) :-
+    vertex(loadId, "Load", _, _),
+    edge(loadId, objectId, _, "object"),
+    edge(callerId, loadId, _, "callee"),
+    edge(callerId, valueId, "Data", _),
+    infectedBySource(sourceFunction, valueId).
+
 sourceToSink(sourceName, sourceId, sinkFunction, sinkIdx, sinkId) :- 
     source(sourceName, sourceId),
     sink(sinkFunction, sinkIdx, sinkId),
