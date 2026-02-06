@@ -12,20 +12,20 @@
 .decl sink(sinkFunction: symbol, paramIdx: symbol, paramId: number)
 .decl sourceName(name: symbol)
 .input sourceName(filename="source_names.txt")
-.decl sinkName(name: symbol)
-.input sinkName(filename="sink_names.txt")
+.decl sinkFunctionName(name: symbol)
+.input sinkFunctionName(filename="sink_names.txt")
 
 source(functionName, retId) :-
     sourceName(functionName),
     function_return(functionName, ret),
     edge(ret, retId, _, "value").
 
-sink(functionName, idx, id) :-
-    sinkName(functionName),
-    vertex(functionId, _, _, functionName),
-    edge(_, functionId, _, "callee"),
-    edge(functionId, id, _, idx),
-    IS_INTEGER(idx).
+sink(functionName, idx, sinkId) :-
+    sinkFunctionName(functionName),
+    vertex(functionCallId, "Call", "Compound", "Call"),
+    vertex(functionId, "Symbol", "Data", functionName),
+    edge(functionCallId, functionId, "Data", "callee"),
+    edge(functionCallId, sinkId, "Data", idx).
 
 infectedBySource(sourceFunction, id) :-
     source(sourceFunction, id).
