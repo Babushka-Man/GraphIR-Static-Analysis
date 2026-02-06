@@ -5,8 +5,16 @@ export function getUserInput(): string {
     return "user_input";
 }
 
-export function sendToSink(a: string, b: string, c: string) {
-    console.log("sink:", a, b, c);
+export function getUserInput2(): string {
+    return "user_input";
+}
+
+export function sendToSink(a: string, b: string) {
+    console.log("sink:", a, b);
+}
+
+export function sendToSink2(a: string, b: string) {
+    console.log("sink:", a, b);
 }
 
 // ------------------------------
@@ -60,5 +68,7 @@ export function testMegaFlow() {
     const mapped = arr2.map(x => x + "_mapped")[0];
 
     // final sink
-    sendToSink(mapped, arr2[1], var3);
+    sendToSink(mapped, arr2[1]);
+    sendToSink2(arrPicked, var3);
+    sendToSink2(getUserInput2(), getUserInput2());
 }

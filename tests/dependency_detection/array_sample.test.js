@@ -1,0 +1,22 @@
+const { expect } = require('chai');
+const { readCsv, getSamplePath, checkSourceToSinkFile, assertRelationsExist } = require('./test-helper');
+
+describe('Array Sample - Dependency Detection', () => {
+  const sampleName = 'array_sample';
+  const samplePath = getSamplePath(sampleName);
+
+  it('should have sourceToSink.csv file', () => {
+    expect(checkSourceToSinkFile(sampleName)).to.be.true;
+  });
+
+  it('should contain expected source-to-sink relations', () => {
+    const rows = readCsv(`${samplePath}/sourceToSink.csv`);
+    
+    const expectedRelations = [
+      ['getUserInput', '8', 'sendToSink', '1', '36'],
+      ['getUserInput', '8', 'sendToSink', '0', '34']
+    ];
+
+    assertRelationsExist(rows, expectedRelations);
+  });
+});

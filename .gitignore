@@ -7,6 +7,9 @@ libfunctors.dylib
 # Output files
 out
 
+# Dependencies
+node_modules/
+
 /.vscode
 *.out
 /*.txt
