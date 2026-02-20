@@ -14,6 +14,9 @@
 .input sourceName(filename="source_names.txt")
 .decl sinkFunctionName(name: symbol)
 .input sinkFunctionName(filename="sink_names.txt")
+.decl debugInfo(id: number, filepath: symbol, line: number, column: number, value: symbol)
+.input debugInfo(filename="debug_info.csv", delimiter=";")
+.decl sourceToSinkWithLines(sourceName: symbol, sourceLine: number, sourceColumn: number, sinkFunction: symbol, sinkLine: number, sinkColumn: number)
 
 source(functionName, retId) :-
     sourceName(functionName),
@@ -83,4 +86,11 @@ sourceToSink(sourceName, sourceId, sinkFunction, sinkIdx, sinkId) :-
     sink(sinkFunction, sinkIdx, sinkId),
     may_refer_to(sinkId, infectedId).
 
+sourceToSinkWithLines(sourceName, sourceLine, sourceColumn, sinkFunction, sinkLine, sinkColumn) :-
+    sourceToSink(sourceName, _, sinkFunction, _, sinkId),
+    vertex(sourceFunctionID, _, _, sourceName),
+    debugInfo(sourceFunctionID, _, sourceLine, sourceColumn, _),
+    debugInfo(sinkId, _, sinkLine, sinkColumn, _).
+
+.output sourceToSinkWithLines
 .output sourceToSink
