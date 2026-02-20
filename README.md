@@ -3,18 +3,6 @@
 This spin-off project of [DUCTAPE](https://github.com/AdiHarif/DUCTAPE) is all about "dependency detection".
 For this project I used VS code.
 
-# Table of contents
----
-- [[Dependency detection README#General idea|General idea]]
-- [[Dependency detection README#How it works|How it works]]
-- [[Dependency detection README#Testing|Testing]] 
-	- [[#Running Tests|Running Tests]]
-		- [[#Running Tests#Run All Tests|Run All Tests]] 
-		- [[#Running Tests#Run a Single Test File|Run a Single Test File]]
-	- [[#Examples|Examples]]
-- [[Dependency detection README#References|References]] 
-- [[Dependency detection README#`launch.json`|launch.json]]
-
 # General idea
 ---
 For a given _source_ and _sink_, detect whether a source finds its way to one of the sinks in some form.
